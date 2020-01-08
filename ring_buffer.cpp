@@ -26,9 +26,7 @@ public:
         }
     }
     size_t size() const {
-        return head_ >= tail_ ?
-            head_ - tail_ :
-            BUFSIZE - (tail_ - head_);
+        return (head_ - tail_ + BUFSIZE) % BUFSIZE;
     }
     const T& remove() {
         assert(!empty());
