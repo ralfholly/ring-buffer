@@ -4,6 +4,9 @@ $(error "Please define GOOGLE_TEST_HOME, ie. `make GOOGLE_TEST_HOME=~/googletest
 endif
 endif
 
+TARGET := test_ring_buffer
+
+CC := g++
 GMOCK_INCLUDE_PATH = $(GOOGLE_TEST_HOME)/googlemock
 GTEST_INCLUDE_PATH = $(GOOGLE_TEST_HOME)/googletest
 
@@ -14,16 +17,18 @@ GTEST_LIBRARY_PATH = $(GOOGLE_TEST_HOME)/googlemock/gtest
 # make CPPFLAGS=-std=c++14
 override CPPFLAGS += -W -Wall -g -pthread -I $(GTEST_INCLUDE_PATH)/include -I $(GMOCK_INCLUDE_PATH)/include
 override LDFLAGS += -L$(GTEST_LIBRARY_PATH) -L$(GMOCK_LIBRARY_PATH)
-override LDLIBS += -lgtest_main -lgtest -lgmock
+override LDLIBS += -lgtest_main -lgtest -lgmock -lpthread
 
 .PHONY : all clean
 
 all: test
 
-ring_buffer: ring_buffer.cpp
+$(TARGET).o: $(TARGET).cpp ring_buffer.h
 
-test: ring_buffer
+$(TARGET): $(TARGET).o
+
+test: $(TARGET)
 	./$<
 
 clean:
-	rm -rf *.o ring_buffer
+	rm -rf *.o $(TARGET)

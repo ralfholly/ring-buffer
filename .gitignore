@@ -1,1 +1,2 @@
-ring_buffer
+test_ring_buffer
+*.o
