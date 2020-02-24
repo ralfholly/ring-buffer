@@ -167,7 +167,7 @@ TEST(ring_buffer, clear) {
     EXPECT_TRUE(rg.empty());
 }
 
-TEST(ring_buffer, ____) {
+TEST(ring_buffer, delete_one_by_one) {
     ring_buffer<int, 10> rb;
 
     rb.add(123);
